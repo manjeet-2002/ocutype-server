@@ -12,9 +12,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://ocutype.netlify.app/",
-    methods: ["GET", "POST"],
-  },
+    origin: "*"
+  }
 });
 
 io.on('connection', (socket) => {
