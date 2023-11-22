@@ -33,6 +33,11 @@ app.post('/', (req, res) => {
     res.status(200).json({ status: 'success'});
 });
 
+app.post('/nodemcu',(req,res)=>{
+  io.emit('nodemcu',{ message : req.body.message });
+  res.status(200).json({status:'success'});
+})
+
 server.listen(3001, () => {
   console.log("SERVER IS RUNNING");
 });
