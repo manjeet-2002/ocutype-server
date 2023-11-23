@@ -5,7 +5,7 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 app.use(cors());
-app.use(express.json());  // Parse JSON bodies
+app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
 
 const server = http.createServer(app);
@@ -16,27 +16,33 @@ const io = new Server(server, {
   }
 });
 
-io.on('connection', (socket) => {
-    console.log('A client connected');
+io.on("connection", (socket) => {
+  console.log("A client connected");
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
-    });
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
 });
 
-app.post('/', (req, res) => {
-    const message = req.body.char;
-    console.log(message);
-    
-    io.emit('recieve', {char : message});
-
-    res.status(200).json({ status: 'success'});
+app.get("/", (req, res) => {
+  res.send("Server connected!");
 });
 
-app.post('/nodemcu',(req,res)=>{
-  io.emit('nodemcu',{ message : req.body.message });
-  res.status(200).json({status:'success'});
-})
+app.post("/", (req, res) => {
+  const message = req.body.char;
+  console.log(message);
+
+  io.emit("recieve", { char: message });
+
+  res.status(200).json({ status: "success" });
+});
+
+app.post("/nodemcu", (req, res) => {
+  console.log("Request Received!");
+  console.log(req.body);
+  io.emit("nodemcu", { message: req.body.message });
+  res.status(200).json({ status: "success" });
+});
 
 server.listen(3001, () => {
   console.log("SERVER IS RUNNING");
