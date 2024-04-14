@@ -28,19 +28,10 @@ app.get("/", (req, res) => {
   res.send("Server connected!");
 });
 
-app.post("/", (req, res) => {
-  const message = req.body.char;
-  console.log(message);
-
-  io.emit("recieve", { char: message });
-
-  res.status(200).json({ status: "success" });
-});
-
 app.post("/nodemcu", (req, res) => {
   console.log("Request Received!");
   console.log(req.body);
-  io.emit("nodemcu", { message: req.body.message });
+  io.emit("nodemcu", { alphabet: req.body.message, suggestions:["Manjeet", "Man", "Mannu"]});
   res.status(200).json({ status: "success" });
 });
 
