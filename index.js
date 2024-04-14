@@ -10,6 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 
 const server = http.createServer(app);
 
+let history =  {
+  sentence : "",
+  lastWord : "",
+  currentWord : "",
+  suggestedWords : []
+}
+
 const io = new Server(server, {
   cors: {
     origin: "*"
@@ -30,8 +37,19 @@ app.get("/", (req, res) => {
 
 app.post("/nodemcu", (req, res) => {
   console.log("Request Received!");
-  console.log(req.body.message);
-  io.emit("recieve", { alphabet: req.body.message, suggestions:["Manjeet", "Man", req.body.message]});
+  const char = req.body.message;
+  io.emit("recieve", { alphabet: char, suggestions:["Manjeet", "Man", "Mannu"]});
+  console.log(char);
+  
+  if(char == " "){
+    history.lastWord=history.currentWord;
+    history.currentWord="";
+    history.sentence+=char;
+  } else if(char <= 'z' && char >= 'a'){
+    history.currentWord+=char;
+    history.sentence+=char;
+  }
+  console.log(history);
   res.status(200).json({ status: "success" });
 });
 
