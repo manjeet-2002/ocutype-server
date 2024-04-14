@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 app.post("/nodemcu", (req, res) => {
   console.log("Request Received!");
   console.log(req.body);
-  io.emit("nodemcu", { alphabet: req.body.message, suggestions:["Manjeet", "Man", "Mannu"]});
+  io.emit("recieve", { alphabet: req.body.message, suggestions:["Manjeet", "Man", "Mannu"]});
   res.status(200).json({ status: "success" });
 });
 
