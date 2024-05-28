@@ -53,7 +53,7 @@ app.post("/nodemcu", async (req, res) => {
       history.sentence += char;
       // make api call to ML model
       const response = await axios.post(
-        "https://next-word-prediction-43k6.onrender.com/predict",
+        "https://ocutype-next-word-predictor.onrender.com/predict",
         {
           sentence: history.sentence
         }
@@ -90,7 +90,7 @@ app.post("/nodemcu", async (req, res) => {
       history.currentWord = "";
       history.sentence += " ";
       const response = await axios.post(
-        "https://next-word-prediction-43k6.onrender.com/predict",
+        "https://ocutype-next-word-predictor.onrender.com/predict",
         {
           sentence: history.sentence
         }
